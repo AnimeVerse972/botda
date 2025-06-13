@@ -1,7 +1,8 @@
 import os
 import logging
 import json
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, types
+from aiogram.utils import executor
 from aiogram.fsm.storage.memory import MemoryStorage  # O'zgartirilgan qator
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 from keep_alive import keep_alive
