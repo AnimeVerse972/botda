@@ -1,9 +1,10 @@
 import os
 import logging
 import json
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.utils import executor
 from keep_alive import keep_alive
 
 # Token va kanal sozlamalari
@@ -36,7 +37,8 @@ async def start_handler(message: types.Message):
             chat_member = await bot.get_chat_member(channel, user_id)
             if chat_member.status not in ['member', 'administrator', 'creator']:
                 not_subscribed.append(channel)
-        except:
+        except Exception as e:
+            logging.error(f"Error checking subscription for {channel}: {e}")
             not_subscribed.append(channel)
 
     if not_subscribed:
@@ -62,7 +64,8 @@ async def handle_code(message: types.Message):
             if member.status not in ['member', 'administrator', 'creator']:
                 await message.answer(f"⛔ Iltimos, {channel} kanaliga obuna bo‘ling va qaytadan urinib ko‘ring.")
                 return
-        except:
+        except Exception as e:
+            logging.error(f"Error checking subscription for {channel}: {e}")
             await message.answer(f"⚠️ {channel} kanal tekshiruvida xatolik. Iltimos, keyinroq urinib ko‘ring.")
             return
 
